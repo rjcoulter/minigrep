@@ -1,6 +1,8 @@
 use std::env;
-use std::fs;
 use std::process;
+
+use minigrep;
+use minigrep::Config;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -13,22 +15,9 @@ fn main() {
     println!("Searching for {}", config.query);
     println!("In file {}", config.filename);
 
-    let contents = fs::read_to_string(config.filename).expect("Error reading the file");
-}
+    if let Err(e) = minigrep::run(config) {
+        println!("Application error: {}", e);
 
-impl Config {
-    fn new(args: &[String]) -> Result<Config, &'static str> {
-        if args.len() < 3 {
-            return Err("Not enough arguments");
-        }
-        let query = args[1].clone();
-        let filename = args[2].clone();
-
-        Ok(Config { query, filename })
+        process::exit(1);
     }
-}
-
-struct Config {
-    query: String,
-    filename: String,
 }
