@@ -12,4 +12,4 @@ Command line tool to search a file for a given phrase
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License 
