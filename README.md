@@ -1,11 +1,10 @@
-# minigrep 
+# minigrep
 
 Command line tool to search a file for a given phrase
 
 ## Built With
 
-* [Rust](https://www.rust-lang.org/) - The web framework used
-
+* [Rust](https://www.rust-lang.org/)  
 
 ## Authors
 
