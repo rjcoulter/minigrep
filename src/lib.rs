@@ -24,8 +24,9 @@ pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
 
 pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
     // Output a message to the terminal
+    let cyan = Style::new().cyan();
     let term = Term::stdout();
-    term.write_line("Welcome to my app")?;
+    cyan.apply_to(term.write_line("Welcome to my app"));
     thread::sleep(Duration::from_millis(2000));
 
     let contents = fs::read_to_string(config.filename)?;
