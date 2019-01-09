@@ -1,6 +1,7 @@
-use std::env;
+use console::{Style, Term};
 use std::error::Error;
-use std::fs;
+use std::time::Duration;
+use std::{env, fs, thread};
 
 pub fn search_case_insensitive<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
     let query = query.to_lowercase();
@@ -22,6 +23,11 @@ pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
 }
 
 pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
+    // Output a message to the terminal
+    let term = Term::stdout();
+    term.write_line("Welcome to my app")?;
+    thread::sleep(Duration::from_millis(2000));
+
     let contents = fs::read_to_string(config.filename)?;
 
     let results = if config.case_sensitive {
