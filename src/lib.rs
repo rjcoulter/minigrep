@@ -1,4 +1,5 @@
 use console::style;
+use indicatif::ProgressBar;
 use std::error::Error;
 use std::{env, fs};
 
@@ -34,9 +35,12 @@ pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
 
 pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
     // Output a message to the terminal
-    println!("{}", style("Searching file...").cyan());
+    println!("{}", style("Searching file for matches...").cyan());
 
     let contents = fs::read_to_string(config.filename)?;
+
+    let pb = ProgressBar::new(100);
+    pb.inc(100);
 
     let results = if config.case_sensitive {
         search(&config.query, &contents)
