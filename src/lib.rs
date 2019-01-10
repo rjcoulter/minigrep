@@ -1,7 +1,6 @@
-use console::{Style, Term};
+use console::style;
 use std::error::Error;
-use std::time::Duration;
-use std::{env, fs, thread};
+use std::{env, fs};
 
 pub fn search_case_insensitive<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
     let query = query.to_lowercase();
@@ -12,22 +11,30 @@ pub fn search_case_insensitive<'a>(query: &str, contents: &'a str) -> Vec<&'a st
             result.push(line);
         }
     }
-    result
+    if result.len() == 0 {
+        println!("{}", "No matches found");
+        return result;
+    } else {
+        return result;
+    }
 }
 
 pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
-    contents
+    let result: Vec<&'a str> = contents
         .lines()
         .filter(|line| line.contains(query))
-        .collect()
+        .collect();
+    if result.len() == 0 {
+        println!("{}", "No matches found");
+        return result;
+    } else {
+        return result;
+    }
 }
 
 pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
     // Output a message to the terminal
-    let cyan = Style::new().cyan();
-    let term = Term::stdout();
-    cyan.apply_to(term.write_line("Welcome to my app"));
-    thread::sleep(Duration::from_millis(2000));
+    println!("{}", style("Searching file...").cyan());
 
     let contents = fs::read_to_string(config.filename)?;
 
