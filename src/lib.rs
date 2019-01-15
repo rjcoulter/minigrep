@@ -38,18 +38,17 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
     println!("{}", style("Searching file for matches...").cyan());
 
     let contents = fs::read_to_string(config.filename)?;
-    /*
-        let pb = ProgressBar::new(100);
-        pb.inc(100);
-    */
+
     let results = if config.case_sensitive {
         search(&config.query, &contents)
     } else {
         search_case_insensitive(&config.query, &contents)
     };
-
-    for line in results {
-        println!("{}", line);
+    let length = results.len() as u64;
+    let pb = ProgressBar::new(length * length);
+    for item in results {
+        pb.inc(length);
+        println!("{}", item);
     }
     Ok(())
 }
